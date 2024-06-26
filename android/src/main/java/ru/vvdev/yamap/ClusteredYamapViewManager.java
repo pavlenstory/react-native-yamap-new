@@ -305,6 +305,7 @@ public class ClusteredYamapViewManager extends ViewGroupManager<ClusteredYamapVi
             castToYaMapView(view).setMapType(type);
         }
     }
+        private static final String TAG = "MyNativeModule";
 
     @ReactProp(name = "initialRegion")
     public void setInitialRegion(View view, ReadableMap params) {

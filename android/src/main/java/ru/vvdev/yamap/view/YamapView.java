@@ -480,6 +480,8 @@ public class YamapView extends MapView implements UserLocationObjectListener, Ca
         }
     }
 
+        private static final String TAG = "MyNativeModule";
+
     public void setInitialRegion(@Nullable ReadableMap params) {
            Log.d(TAG, "aaaaaaaa");
         if ((!params.hasKey("lat") || params.isNull("lat")) || (!params.hasKey("lon") && params.isNull("lon")))

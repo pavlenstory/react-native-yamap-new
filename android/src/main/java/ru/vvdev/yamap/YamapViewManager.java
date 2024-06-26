@@ -296,6 +296,8 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
         }
     }
 
+    private static final String TAG = "MyNativeModule";
+    
     @ReactProp(name = "initialRegion")
     public void setInitialRegion(View view, ReadableMap params) {
            Log.d(TAG, "bbbbbb");
