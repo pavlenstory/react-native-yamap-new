@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 import ru.vvdev.yamap.view.ClusteredYamapView;
 import android.util.Log;
-
+import android.util.Log;
 public class ClusteredYamapViewManager extends ViewGroupManager<ClusteredYamapView> {
     public static final String REACT_CLASS = "ClusteredYamapView";
 
@@ -158,6 +158,7 @@ public class ClusteredYamapViewManager extends ViewGroupManager<ClusteredYamapVi
 
     @ReactProp(name = "clusteredMarkers")
     public void setClusteredMarkers(View view, ReadableArray points) {
+        Log.d(TAG, "setClusteredMarkers");
         castToYaMapView(view).setClusteredMarkers(points.toArrayList());
     }
 
