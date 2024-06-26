@@ -44,7 +44,7 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
         clusterCollection.clear();
         placemarksMap.clear();
         ArrayList<Point> pt = new ArrayList<>();
-        Log.d(TAG, "start setClusteredMarkers");
+        Log.d('MyNativeModule', "start setClusteredMarkers");
         for (int i = 0; i<points.size(); i++) {
             HashMap<String, Double> point = (HashMap<String, Double>) points.get(i);
             pt.add(new Point(point.get("lat"), point.get("lon")));
@@ -59,7 +59,7 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
                 ((YamapMarker)child).setMapObject(placemark);
             }
         }
-              Log.d(TAG, "end setClusteredMarkers");
+              Log.d('MyNativeModule', "end setClusteredMarkers");
         clusterCollection.clusterPlacemarks(50, 12);
     }
 
@@ -111,13 +111,13 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
 
     @Override
     public boolean onClusterTap(@NonNull Cluster cluster) {
-           Log.d(TAG, "start onClusterTap");
+           Log.d('MyNativeModule', "start onClusterTap");
         ArrayList<Point> points = new ArrayList<>();
         for (PlacemarkMapObject placemark : cluster.getPlacemarks()) {
             points.add(placemark.getGeometry());
         }
         fitMarkers(points);
-          Log.d(TAG, "end onClusterTap");
+          Log.d('MyNativeModule', "end onClusterTap");
         return true;
     }
 
