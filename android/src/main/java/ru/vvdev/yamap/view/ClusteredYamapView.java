@@ -42,6 +42,7 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
     public void setClusteredMarkers(ArrayList<Object> points) {
         clusterCollection.clear();
         placemarksMap.clear();
+        System.out.println('start setClusterdMarkers')
         ArrayList<Point> pt = new ArrayList<>();
         for (int i = 0; i<points.size(); i++) {
             HashMap<String, Double> point = (HashMap<String, Double>) points.get(i);
@@ -57,6 +58,7 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
                 ((YamapMarker)child).setMapObject(placemark);
             }
         }
+        System.out.println('end setClusterdMarkers')
         clusterCollection.clusterPlacemarks(50, 12);
     }
 
