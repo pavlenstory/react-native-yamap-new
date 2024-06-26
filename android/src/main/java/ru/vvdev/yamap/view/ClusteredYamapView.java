@@ -42,11 +42,6 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
     public void setClusteredMarkers(ArrayList<Object> points) {
         clusterCollection.clear();
         placemarksMap.clear();
-             NSLog(@'start setClusterdMarkers',exception.reason);
-        System.out.println('start setClusterdMarkers')
-        RCTLogError(@'start setClusterdMarkers', reactTag);
-                        Log.v('start setClusterdMarkers')
-                        Log.i('start setClusterdMarkers')
         ArrayList<Point> pt = new ArrayList<>();
         for (int i = 0; i<points.size(); i++) {
             HashMap<String, Double> point = (HashMap<String, Double>) points.get(i);
@@ -62,11 +57,6 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
                 ((YamapMarker)child).setMapObject(placemark);
             }
         }
-                                Log.i('end setClusterdMarkers')
-                  NSLog(@'end setClusterdMarkers',exception.reason);
-        System.out.println('end setClusterdMarkers')
-                RCTLogError(@'end setClusterdMarkers', reactTag);
-                Log.v('end setClusterdMarkers')
         clusterCollection.clusterPlacemarks(50, 12);
     }
 
