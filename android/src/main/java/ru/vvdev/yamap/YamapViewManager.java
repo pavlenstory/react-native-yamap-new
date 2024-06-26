@@ -53,6 +53,7 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
     }
 
     public Map getExportedCustomBubblingEventTypeConstants() {
+           Log.d(TAG, "start getExportedCustomBubblingEventTypeConstants");
         return MapBuilder.builder()
             .put("routes", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onRouteFound")))
             .put("cameraPosition", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onCameraPositionReceived")))
@@ -65,6 +66,7 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
             .put("screenToWorldPoints", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onScreenToWorldPointsReceived")))
             .put("worldToScreenPoints", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onWorldToScreenPointsReceived")))
             .build();
+                       Log.d(TAG, "end getExportedCustomBubblingEventTypeConstants");
     }
 
     @Override
@@ -157,6 +159,7 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
     }
 
     private YamapView castToYaMapView(View view) {
+                   Log.d(TAG, " castToYaMapView");
         return (YamapView) view;
     }
 

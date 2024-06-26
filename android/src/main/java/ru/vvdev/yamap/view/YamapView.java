@@ -356,6 +356,7 @@ public class YamapView extends MapView implements UserLocationObjectListener, Ca
     }
 
     public void fitAllMarkers() {
+         Log.d(TAG, "start fitAllMarkers");
         ArrayList<Point> points = new ArrayList<>();
         for (int i = 0; i < getChildCount(); ++i) {
             Object obj = getChildAt(i);
@@ -365,6 +366,7 @@ public class YamapView extends MapView implements UserLocationObjectListener, Ca
             }
         }
         fitMarkers(points);
+        Log.d(TAG, "end fitAllMarkers");
     }
 
     private ArrayList<Point> mapPlacemarksToPoints(List<PlacemarkMapObject> placemarks) {

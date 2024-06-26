@@ -174,9 +174,11 @@ public class ClusteredYamapViewManager extends ViewGroupManager<ClusteredYamapVi
     @Nonnull
     @Override
     public ClusteredYamapView createViewInstance(@Nonnull ThemedReactContext context) {
+                Log.d(TAG, "createViewInstance")
         ClusteredYamapView view = new ClusteredYamapView(context);
         MapKitFactory.getInstance().onStart();
         view.onStart();
+          Log.d(TAG, "per end (return) createViewInstance")
         return view;
     }
 
