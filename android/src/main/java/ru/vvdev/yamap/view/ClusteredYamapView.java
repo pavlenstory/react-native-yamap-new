@@ -27,6 +27,7 @@ import com.yandex.runtime.image.ImageProvider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import android.util.Log;
 
 public class ClusteredYamapView extends YamapView implements ClusterListener, ClusterTapListener {
     private ClusterizedPlacemarkCollection clusterCollection;
@@ -43,6 +44,7 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
         clusterCollection.clear();
         placemarksMap.clear();
         ArrayList<Point> pt = new ArrayList<>();
+        Log.d(TAG, "start setClusteredMarkers");
         for (int i = 0; i<points.size(); i++) {
             HashMap<String, Double> point = (HashMap<String, Double>) points.get(i);
             pt.add(new Point(point.get("lat"), point.get("lon")));
@@ -57,6 +59,7 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
                 ((YamapMarker)child).setMapObject(placemark);
             }
         }
+              Log.d(TAG, "end setClusteredMarkers");
         clusterCollection.clusterPlacemarks(50, 12);
     }
 
@@ -108,11 +111,13 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
 
     @Override
     public boolean onClusterTap(@NonNull Cluster cluster) {
+           Log.d(TAG, "start onClusterTap");
         ArrayList<Point> points = new ArrayList<>();
         for (PlacemarkMapObject placemark : cluster.getPlacemarks()) {
             points.add(placemark.getGeometry());
         }
         fitMarkers(points);
+          Log.d(TAG, "end onClusterTap");
         return true;
     }
 
