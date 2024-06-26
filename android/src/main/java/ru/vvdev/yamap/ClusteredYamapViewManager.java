@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 import ru.vvdev.yamap.view.ClusteredYamapView;
 import android.util.Log;
-import android.util.Log;
+
 public class ClusteredYamapViewManager extends ViewGroupManager<ClusteredYamapView> {
     public static final String REACT_CLASS = "ClusteredYamapView";
 
@@ -174,11 +174,11 @@ public class ClusteredYamapViewManager extends ViewGroupManager<ClusteredYamapVi
     @Nonnull
     @Override
     public ClusteredYamapView createViewInstance(@Nonnull ThemedReactContext context) {
-                Log.d(TAG, "createViewInstance")
+                Log.d(TAG, "createViewInstance");
         ClusteredYamapView view = new ClusteredYamapView(context);
         MapKitFactory.getInstance().onStart();
         view.onStart();
-          Log.d(TAG, "per end (return) createViewInstance")
+          Log.d(TAG, "per end (return) createViewInstance");
         return view;
     }
 
