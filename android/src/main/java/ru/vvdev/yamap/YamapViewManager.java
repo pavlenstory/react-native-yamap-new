@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import ru.vvdev.yamap.view.YamapView;
+import android.util.Log;
 
 public class YamapViewManager extends ViewGroupManager<YamapView> {
     public static final String REACT_CLASS = "YamapView";
@@ -297,7 +298,7 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
     }
 
     private static final String TAG = "MyNativeModule";
-    
+
     @ReactProp(name = "initialRegion")
     public void setInitialRegion(View view, ReadableMap params) {
            Log.d(TAG, "bbbbbb");
