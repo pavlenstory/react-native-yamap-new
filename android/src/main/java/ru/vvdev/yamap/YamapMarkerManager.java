@@ -21,9 +21,12 @@ import javax.annotation.Nullable;
 
 import ru.vvdev.yamap.view.YamapMarker;
 import ru.vvdev.yamap.view.YamapView;
+import android.util.Log;
 
 public class YamapMarkerManager extends ViewGroupManager<YamapMarker> {
     public static final String REACT_CLASS = "YamapMarker";
+    
+ private static final String TAG = "MyNativeModule";
 
     YamapMarkerManager() {}
 
@@ -114,8 +117,10 @@ public class YamapMarkerManager extends ViewGroupManager<YamapMarker> {
             @NonNull YamapMarker view,
             String commandType,
             @Nullable ReadableArray args) {
+                Log.d(TAG, "receiveCommand");
         switch (commandType) {
             case "animatedMoveTo":
+                     Log.d(TAG, "animatedMoveTo");
                 ReadableMap markerPoint = args.getMap(0);
                 int moveDuration = args.getInt(1);
                 float lon = (float) markerPoint.getDouble("lon");
@@ -124,6 +129,7 @@ public class YamapMarkerManager extends ViewGroupManager<YamapMarker> {
                 castToMarkerView(view).animatedMoveTo(point, moveDuration);
                 return;
             case "animatedRotateTo":
+                       Log.d(TAG, "animatedRotateTo");
                 int angle = args.getInt(0);
                 int rotateDuration = args.getInt(1);
                 castToMarkerView(view).animatedRotateTo(angle, rotateDuration);

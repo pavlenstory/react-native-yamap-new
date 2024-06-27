@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import ru.vvdev.yamap.view.YamapView;
+import android.util.Log;
 
 public class YamapViewManager extends ViewGroupManager<YamapView> {
     public static final String REACT_CLASS = "YamapView";
@@ -52,6 +53,7 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
     }
 
     public Map getExportedCustomBubblingEventTypeConstants() {
+           Log.d(TAG, "getExportedCustomBubblingEventTypeConstants");
         return MapBuilder.builder()
             .put("routes", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onRouteFound")))
             .put("cameraPosition", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onCameraPositionReceived")))
@@ -64,6 +66,7 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
             .put("screenToWorldPoints", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onScreenToWorldPointsReceived")))
             .put("worldToScreenPoints", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onWorldToScreenPointsReceived")))
             .build();
+            
     }
 
     @Override
@@ -156,6 +159,7 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
     }
 
     private YamapView castToYaMapView(View view) {
+                   Log.d(TAG, " castToYaMapView");
         return (YamapView) view;
     }
 
@@ -296,8 +300,11 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
         }
     }
 
+    private static final String TAG = "MyNativeModule";
+
     @ReactProp(name = "initialRegion")
     public void setInitialRegion(View view, ReadableMap params) {
+           Log.d(TAG, "bbbbbb");
         if (params != null) {
             castToYaMapView(view).setInitialRegion(params);
         }

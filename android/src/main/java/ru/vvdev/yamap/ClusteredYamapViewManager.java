@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import ru.vvdev.yamap.view.ClusteredYamapView;
+import android.util.Log;
 
 public class ClusteredYamapViewManager extends ViewGroupManager<ClusteredYamapView> {
     public static final String REACT_CLASS = "ClusteredYamapView";
@@ -157,6 +158,7 @@ public class ClusteredYamapViewManager extends ViewGroupManager<ClusteredYamapVi
 
     @ReactProp(name = "clusteredMarkers")
     public void setClusteredMarkers(View view, ReadableArray points) {
+        Log.d(TAG, "setClusteredMarkers");
         castToYaMapView(view).setClusteredMarkers(points.toArrayList());
     }
 
@@ -172,9 +174,11 @@ public class ClusteredYamapViewManager extends ViewGroupManager<ClusteredYamapVi
     @Nonnull
     @Override
     public ClusteredYamapView createViewInstance(@Nonnull ThemedReactContext context) {
+                Log.d(TAG, "createViewInstance");
         ClusteredYamapView view = new ClusteredYamapView(context);
         MapKitFactory.getInstance().onStart();
         view.onStart();
+          Log.d(TAG, "per end (return) createViewInstance");
         return view;
     }
 
@@ -305,9 +309,11 @@ public class ClusteredYamapViewManager extends ViewGroupManager<ClusteredYamapVi
             castToYaMapView(view).setMapType(type);
         }
     }
+        private static final String TAG = "MyNativeModule";
 
     @ReactProp(name = "initialRegion")
     public void setInitialRegion(View view, ReadableMap params) {
+        Log.d(TAG, "ddddddddddd");
         if (params != null) {
             castToYaMapView(view).setInitialRegion(params);
         }

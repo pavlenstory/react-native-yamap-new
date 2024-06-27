@@ -88,6 +88,7 @@ import ru.vvdev.yamap.models.ReactMapObject;
 import ru.vvdev.yamap.utils.Callback;
 import ru.vvdev.yamap.utils.ImageLoader;
 import ru.vvdev.yamap.utils.RouteManager;
+import android.util.Log;
 
 public class YamapView extends MapView implements UserLocationObjectListener, CameraListener, InputListener, TrafficListener, MapLoadedListener {
     private final static Map<String, String> DEFAULT_VEHICLE_COLORS = new HashMap<String, String>() {{
@@ -355,6 +356,7 @@ public class YamapView extends MapView implements UserLocationObjectListener, Ca
     }
 
     public void fitAllMarkers() {
+         Log.d(TAG, "start fitAllMarkers");
         ArrayList<Point> points = new ArrayList<>();
         for (int i = 0; i < getChildCount(); ++i) {
             Object obj = getChildAt(i);
@@ -364,6 +366,7 @@ public class YamapView extends MapView implements UserLocationObjectListener, Ca
             }
         }
         fitMarkers(points);
+        Log.d(TAG, "end fitAllMarkers");
     }
 
     private ArrayList<Point> mapPlacemarksToPoints(List<PlacemarkMapObject> placemarks) {
@@ -480,7 +483,10 @@ public class YamapView extends MapView implements UserLocationObjectListener, Ca
         }
     }
 
+        private static final String TAG = "MyNativeModule";
+
     public void setInitialRegion(@Nullable ReadableMap params) {
+           Log.d(TAG, "aaaaaaaa");
         if ((!params.hasKey("lat") || params.isNull("lat")) || (!params.hasKey("lon") && params.isNull("lon")))
             return;
 
