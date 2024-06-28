@@ -103,8 +103,8 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
             try {
                 clusterCollection.remove(mapObject);
             }
-            catch {
-                
+            catch(Exception e) {
+                //  Block of code to handle errors
             }
             placemarksMap.remove("" + child.point.getLatitude() + child.point.getLongitude());
         }
