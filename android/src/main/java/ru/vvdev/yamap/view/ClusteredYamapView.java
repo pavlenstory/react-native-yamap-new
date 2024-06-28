@@ -27,6 +27,9 @@ import com.yandex.runtime.image.ImageProvider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 import android.util.Log;
 
 public class ClusteredYamapView extends YamapView implements ClusterListener, ClusterTapListener {
@@ -35,8 +38,9 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
     private HashMap<String, PlacemarkMapObject> placemarksMap = new HashMap();
     private ArrayList<Point> pointsList = new ArrayList<>();
 
- private static final String TAG = "MyNativeModule";
- 
+    private static final String TAG = "MyNativeModule";
+    private final Set<MapObject> mapObjectsSet = new HashSet<>();
+
     public ClusteredYamapView(Context context) {
         super(context);
         clusterCollection = getMap().getMapObjects().addClusterizedPlacemarkCollection(this);
@@ -47,21 +51,22 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
         placemarksMap.clear();
         ArrayList<Point> pt = new ArrayList<>();
         Log.d(TAG, "start setClusteredMarkers");
-        for (int i = 0; i<points.size(); i++) {
+        for (int i = 0; i < points.size(); i++) {
             HashMap<String, Double> point = (HashMap<String, Double>) points.get(i);
             pt.add(new Point(point.get("lat"), point.get("lon")));
         }
         List<PlacemarkMapObject> placemarks = clusterCollection.addPlacemarks(pt, new TextImageProvider(""), new IconStyle());
         pointsList = pt;
-        for (int i = 0; i<placemarks.size(); i++) {
+        for (int i = 0; i < placemarks.size(); i++) {
             PlacemarkMapObject placemark = placemarks.get(i);
+            mapObjectsSet.add(placemark);
             placemarksMap.put("" + placemark.getGeometry().getLatitude() + placemark.getGeometry().getLongitude(), placemark);
             Object child = getChildAt(i);
             if (child instanceof YamapMarker) {
-                ((YamapMarker)child).setMapObject(placemark);
+                ((YamapMarker) child).setMapObject(placemark);
             }
         }
-              Log.d(TAG, "end setClusteredMarkers");
+        Log.d(TAG, "end setClusteredMarkers");
         clusterCollection.clusterPlacemarks(50, 12);
     }
 
@@ -72,13 +77,14 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
 
     private void updateUserMarkersColor() {
         clusterCollection.clear();
-        List<PlacemarkMapObject> placemarks =  clusterCollection.addPlacemarks(pointsList, new TextImageProvider(Integer.toString(pointsList.size())), new IconStyle());
-        for (int i = 0; i<placemarks.size(); i++) {
+        List<PlacemarkMapObject> placemarks = clusterCollection.addPlacemarks(pointsList, new TextImageProvider(Integer.toString(pointsList.size())), new IconStyle());
+        for (int i = 0; i < placemarks.size(); i++) {
             PlacemarkMapObject placemark = placemarks.get(i);
+            mapObjectsSet.add(placemark);
             placemarksMap.put("" + placemark.getGeometry().getLatitude() + placemark.getGeometry().getLongitude(), placemark);
             Object child = getChildAt(i);
             if (child instanceof YamapMarker) {
-                ((YamapMarker)child).setMapObject(placemark);
+                ((YamapMarker) child).setMapObject(placemark);
             }
         }
         clusterCollection.clusterPlacemarks(50, 12);
@@ -88,7 +94,7 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
     public void addFeature(View child, int index) {
         YamapMarker marker = (YamapMarker) child;
         PlacemarkMapObject placemark = placemarksMap.get("" + marker.point.getLatitude() + marker.point.getLongitude());
-        if (placemark!=null) {
+        if (placemark != null) {
             marker.setMapObject(placemark);
         }
     }
@@ -99,12 +105,22 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
             final YamapMarker child = (YamapMarker) getChildAt(index);
             if (child == null) return;
             final MapObject mapObject = child.getMapObject();
-            if (mapObject == null || !mapObject.isValid()) return;
-            try {
-                clusterCollection.remove(mapObject);
+            if (mapObject == null || !mapObject.isValid()) {
+                Log.d(TAG, "MapObject is null or invalid");
+                return;
             }
-            catch(Exception e) {
-                //  Block of code to handle errors
+            try {
+                // Ensure the MapObject exists in the mapObjectsSet before removing
+                if (mapObjectsSet.contains(mapObject)) {
+                    clusterCollection.remove(mapObject);
+                    mapObjectsSet.remove(mapObject);  // Remove from the set
+                    Log.d(TAG, "Successfully removed MapObject");
+                } else {
+                    Log.w(TAG, "MapObject not found in mapObjectsSet");
+                }
+            } catch (Exception e) {
+                // Log the exception to understand why the removal is failing
+                Log.e(TAG, "Failed to remove MapObject: " + e.getMessage(), e);
             }
             placemarksMap.remove("" + child.point.getLatitude() + child.point.getLongitude());
         }
@@ -118,13 +134,13 @@ public class ClusteredYamapView extends YamapView implements ClusterListener, Cl
 
     @Override
     public boolean onClusterTap(@NonNull Cluster cluster) {
-           Log.d(TAG, "start onClusterTap");
+        Log.d(TAG, "start onClusterTap");
         ArrayList<Point> points = new ArrayList<>();
         for (PlacemarkMapObject placemark : cluster.getPlacemarks()) {
             points.add(placemark.getGeometry());
         }
         fitMarkers(points);
-          Log.d(TAG, "end onClusterTap");
+        Log.d(TAG, "end onClusterTap");
         return true;
     }
 
